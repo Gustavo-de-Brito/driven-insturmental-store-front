@@ -1,6 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomeView from "./Home/HomeView";
+import GlobalStyle from "./theme/globalStyle";
+
 function App() {
   return (
-    <h1>Hello world</h1>
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={ <HomeView /> } /> 
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
