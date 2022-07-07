@@ -21,7 +21,7 @@ function HomeView() {
 const BrandLogo = styled.div`
     width: 100vw;
     height: 36vh;
-    margin-top: 80px;
+    margin-top: 10px;
     border: 1px solid #000;
     background-position: center;
     background-image: url(${logo});

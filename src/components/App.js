@@ -3,6 +3,7 @@ import { useState } from "react";
 import FilterContext from "./Contexts/FilterContext";
 import HomeView from "./Home/HomeView";
 import GlobalStyle from "./theme/globalStyle";
+import Navbar from "./Navbar/Navbar";
 
 function App() {
   const [ productsFilter, setProductsFilter ] = useState("Produtos");
@@ -11,6 +12,7 @@ function App() {
     <FilterContext.Provider value={ { productsFilter, setProductsFilter } } >
       <GlobalStyle />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={ <HomeView /> } /> 
         </Routes>
