@@ -1,13 +1,17 @@
 import styled from "styled-components";
+import { useContext } from "react";
 import ProductsList from "./ProductsList";
+import FilterContext from "../Contexts/FilterContext";
 import logo from "../../assets/images/logo-instrumental.png";
 
 function HomeView() {
+  const { productsFilter } = useContext(FilterContext);
+
   return (
     <ViewContainer>
       <BrandLogo />
       <ProductsContainer>
-        <h2>Produtos</h2>
+        <h2>{ productsFilter }</h2>
         <ProductsList />
       </ProductsContainer>
     </ViewContainer>

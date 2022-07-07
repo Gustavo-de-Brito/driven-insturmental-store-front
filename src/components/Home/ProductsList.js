@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
+import FilterContext from "../Contexts/FilterContext";
 import DefaultButton from "../shared/DefaultButtonStyle";
 
 function ProductsList() {
+  const filterByCategory = category => {
+    return category === productsFilter || productsFilter !== "Produtos";
+  }
+
   const [ products, setProducts ] = useState([]);
+  const showProducts = products.filter(({ category }) => filterByCategory(category));
+
+  const { productsFilter } = useContext(FilterContext);
 
   return (
     <ProductsUl>
         {
           products.length > 0
           ?
-          products.map(({ name, imageUrl, price }, index) => {
+          showProducts.map(({ name, imageUrl, price }, index) => {
             return (
               <Product key={index} >
                 <img src={ imageUrl } alt={ name }  />
