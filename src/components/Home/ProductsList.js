@@ -1,17 +1,32 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import FilterContext from "../Contexts/FilterContext";
 import DefaultButton from "../shared/DefaultButtonStyle";
 
 function ProductsList() {
   const filterByCategory = category => {
-    return category === productsFilter || productsFilter !== "Produtos";
+    return category === productsFilter || productsFilter === "Produtos";
   }
 
+  const { productsFilter } = useContext(FilterContext);
   const [ products, setProducts ] = useState([]);
   const showProducts = products.filter(({ category }) => filterByCategory(category));
 
-  const { productsFilter } = useContext(FilterContext);
+  useEffect(() => {
+    async function getProductsData() {
+      try{
+        const response = await axios.get("http://localhost:5000/products");
+  
+        setProducts(response.data);
+      } catch(err) {
+        console.log(err.response.data);
+        alert("Ocorreu um erro ao tentar exibir os produtos");
+      }
+    }
+
+    getProductsData();
+  }, []);
 
   return (
     <ProductsUl>
