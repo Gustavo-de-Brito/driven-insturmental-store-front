@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import ProductsList from "./ProductsList";
 import FilterContext from "../Contexts/FilterContext";
 import logo from "../../assets/images/logo-instrumental.png";
+import Pagination from "./Pagination";
 
 function HomeView() {
+  const [ currentPage, setCurrentPage ] = useState(1);
   const { productsFilter } = useContext(FilterContext);
 
   return (
@@ -12,7 +14,8 @@ function HomeView() {
       <BrandLogo />
       <ProductsContainer>
         <h2>{ productsFilter }</h2>
-        <ProductsList />
+        <ProductsList currentPage={ currentPage } />
+        <Pagination currentPage={ currentPage } setCurrentPage={ setCurrentPage } />
       </ProductsContainer>
     </ViewContainer>
   );
