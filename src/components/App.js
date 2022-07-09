@@ -26,7 +26,6 @@ function App() {
               <Route path="/" element={ <HomeView /> } /> 
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<Cadastro />} />
-              <Route path="/cart" element={<Cadastro />} />
             </Routes>
           </BrowserRouter>
         </UserContext.Provider>
