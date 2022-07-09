@@ -12,7 +12,7 @@ function Navbar() {
 
   const location = useLocation();
   const currentRoute = location.pathname;
-  const showNavbar = useState(canShowNavbar);
+  const showNavbar = canShowNavbar();
   const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
   return (

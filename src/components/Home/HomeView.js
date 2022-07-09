@@ -39,16 +39,8 @@ const ViewContainer = styled.div`
   min-height: 100vh;
   padding-bottom: 50px;
   background-color: #CACACA;
+  color: #000000;
 `;
-
-const BrandLsogo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  max-height: 300px;
-  overflow: hidden;
-  `;
 
 const ProductsContainer = styled.div`
   display: flex;
