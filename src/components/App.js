@@ -4,6 +4,8 @@ import FilterContext from "./Contexts/FilterContext";
 import HomeView from "./Home/HomeView";
 import GlobalStyle from "./theme/globalStyle";
 import Navbar from "./Navbar/Navbar";
+import Cart from "./Cart/Cart";
+import Checkout from "./Checkout/Checkout";
 
 function App() {
   const [ productsFilter, setProductsFilter ] = useState("Produtos");
@@ -15,6 +17,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={ <HomeView /> } /> 
+          <Route path="/cart" element={ <Cart/> } /> 
+          <Route path="/checkout" element={ <Checkout/> } /> 
         </Routes>
       </BrowserRouter>
     </FilterContext.Provider>
