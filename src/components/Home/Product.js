@@ -1,11 +1,12 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../UserContext";
+import LoginWarning from "../shared/LoginWarning";
 import DefaultButton from "../shared/DefaultButtonStyle";
 
 function Product({ product }) {
-  const { userData } = useContext(UserContext);
+  const { userData, isUserLogged, setIsUserLogged } = useContext(UserContext);
 
   async function addToCart() {
     const config = {
@@ -25,6 +26,8 @@ function Product({ product }) {
     } catch(err) {
       if(err.response.status === 409) {
         alert("Esse produto já está no carrinho");
+      } else if(err.response.status === 401) {
+        setIsUserLogged(false);
       }
       console.log(err);
     }
@@ -36,6 +39,13 @@ function Product({ product }) {
       <h3>{ product.name }</h3>
       <p>R$ { product.price }</p>
       <DefaultButton onClick={ () => addToCart(product) }>Adicionar ao carrinho</DefaultButton>
+      {
+        !isUserLogged
+        ?
+        <LoginWarning />
+        :
+        <></>
+      }
     </ProductContainer>
   )
 }

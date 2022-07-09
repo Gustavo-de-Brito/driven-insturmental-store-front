@@ -14,11 +14,12 @@ function App() {
   const [ products, setProducts ] = useState([]);
   const [userData, setUserData] = useState(null);
   const [userName, setUserName] = useState("");
+  const [ isUserLogged, setIsUserLogged ] = useState(true);
 
   return (
     <FilterContext.Provider value={ { productsFilter, setProductsFilter } } >
       <ListProductsContext.Provider value={ { products, setProducts } } >
-        <UserContext.Provider value={{userData, setUserData, userName, setUserName}}>
+        <UserContext.Provider value={{userData, setUserData, userName, setUserName, isUserLogged, setIsUserLogged}}>
           <GlobalStyle />
           <BrowserRouter>
             <Navbar />
