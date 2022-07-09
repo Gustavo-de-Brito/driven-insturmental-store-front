@@ -20,7 +20,7 @@ export default function Cadastro () {
 
         setLoading(true);
 
-            const requisicao = axios.post("https://?????????????????????????????????????.herokuapp.com/signup", {
+            const requisicao = axios.post("http://localhost:5000/signup", {
                 name: nome,
                 email: email,
                 password: senha,
@@ -29,7 +29,7 @@ export default function Cadastro () {
 
         requisicao.then((response) => {
             console.log(response.data);
-            navigate("/");
+            navigate("/login");
         });
 
         requisicao.catch((err) => {

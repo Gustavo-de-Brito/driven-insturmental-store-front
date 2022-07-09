@@ -23,7 +23,7 @@ export default function Login () {
 
         setLoading(true);
 
-        const requisicao = axios.post("https://??????????????????????????????????????.herokuapp.com/login", {
+        const requisicao = axios.post("http://localhost:5000/login", {
             email: email,
             password: senha
         });
@@ -33,7 +33,7 @@ export default function Login () {
             setUserData(response.data.token);
             setUserName(response.data.name);
             console.log(response.data);
-            navigate("/cart");
+            navigate("/");
         });
 
         requisicao.catch((err) => {
