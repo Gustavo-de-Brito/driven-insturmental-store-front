@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import FilterContext from "../Contexts/FilterContext";
 import ListProductsContext from "../Contexts/ListProductsContext";
-import DefaultButton from "../shared/DefaultButtonStyle";
+import Product from "./Product";
 
 function ProductsList({ currentPage }) {
   const filterByCategory = category => {
@@ -49,14 +49,9 @@ function ProductsList({ currentPage }) {
         {
           products.length > 0
           ?
-          showProducts.map(({ name, imageUrl, price }, index) => {
+          showProducts.map((product, index) => {
             return (
-              <Product key={index} >
-                <img src={ imageUrl } alt={ name }  />
-                <h3>{ name }</h3>
-                <p>R$ { price }</p>
-                <DefaultButton>Adicionar ao carrinho</DefaultButton>
-              </Product>
+              <Product key={ index } product={ product } />
             );
           })
           :
@@ -73,35 +68,5 @@ const ProductsUl = styled.ul`
   margin-top: 40px;
   padding: 0 10px;
 `;
-
-const Product = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px 10%;
-  background-color: #D9D9D9;
-  border-radius: 8px;
-
-  img {
-    width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-  }
-  
-  h3 {
-    width: 90%;
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-`;
-
-
 
 export default ProductsList;
