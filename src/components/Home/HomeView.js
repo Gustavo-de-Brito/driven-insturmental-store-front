@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import ProductsList from "./ProductsList";
 import FilterContext from "../Contexts/FilterContext";
 import logo from "../../assets/images/logo-instrumental.png";
+import Pagination from "./Pagination";
 
 function HomeView() {
+  const [ currentPage, setCurrentPage ] = useState(1);
   const { productsFilter } = useContext(FilterContext);
 
   return (
@@ -12,7 +14,8 @@ function HomeView() {
       <BrandLogo />
       <ProductsContainer>
         <h2>{ productsFilter }</h2>
-        <ProductsList />
+        <ProductsList currentPage={ currentPage } />
+        <Pagination currentPage={ currentPage } setCurrentPage={ setCurrentPage } />
       </ProductsContainer>
     </ViewContainer>
   );
@@ -36,16 +39,8 @@ const ViewContainer = styled.div`
   min-height: 100vh;
   padding-bottom: 50px;
   background-color: #CACACA;
+  color: #000000;
 `;
-
-const BrandLsogo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  max-height: 300px;
-  overflow: hidden;
-  `;
 
 const ProductsContainer = styled.div`
   display: flex;
