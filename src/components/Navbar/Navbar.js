@@ -32,9 +32,10 @@ const NavigationBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-height: 70px;
+  min-height: 15vh;
   padding: 14px 12px;
   background-color: #10454F;
+  z-index: 5;
   
   h1 {
     width: 100px;
