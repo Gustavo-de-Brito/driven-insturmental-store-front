@@ -8,38 +8,22 @@ import React from 'react'
 import { render } from 'react-dom'
 import { ThreeDots } from 'react-loader-spinner'
 
-import UserContext from "./UserContext";
-
-export default function Login () {
-	const [email, setEmail] = useState("");
+export default function Employees() {
 	const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
-    const { userData, setUserData } = useContext(UserContext);
-    const { userName, setUserName } = useContext(UserContext);
     const navigate = useNavigate();
+    const password = 12345;
 
 	function fazerLogin (event) {
 		event.preventDefault();
 
         setLoading(true);
+        if (senha == password) {
+            navigate("/register-product");
+        } else {
+            alert("Senha incorreta!");
+        }
 
-        const requisicao = axios.post("https://driven-instrumental.herokuapp.com/login", {
-            email: email,
-            password: senha
-        });
-
-
-        requisicao.then((response) => {
-            setUserData(response.data.token);
-            setUserName(response.data.name);
-            console.log(response.data);
-            navigate("/");
-        });
-
-        requisicao.catch((err) => {
-            console.log(err);
-            alert(err);
-        });
 	}
 
     return (
@@ -50,19 +34,11 @@ export default function Login () {
 
             <Form>
                 <form onSubmit={fazerLogin}>
-                    <input type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} required disabled={loading}/>
-                    <br/>
-                    <input type="password" placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} required disabled={loading}/>
+                    <input type="password" placeholder="Senha de admin (é 12345 ;))" value={senha} onChange={e => setSenha(e.target.value)} required disabled={loading}/>
                     <br/>
                     {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Entrar</button>}
                 </form>
             </Form>
-
-            <Cadastro>
-                <Link to="/cadastro">
-                    <h1>Não tem uma conta? Cadastre-se!</h1>
-                </Link>
-            </Cadastro>
         </>
     );
 }

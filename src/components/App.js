@@ -7,10 +7,16 @@ import GlobalStyle from "./theme/globalStyle";
 import HomeView from "./Home/HomeView";
 import Login from "./Login";
 import Cadastro from "./Cadastro";
+
+import Employees from "./Employees";
+import RegisterProduct from "./RegisterProduct";
+import UserContext from "./UserContext";
+
 import Navbar from "./Navbar/Navbar";
 import Cart from "./Cart/Cart";
 import Checkout from "./Checkout/Checkout";
 import CartContext from "./Contexts/CartContext"
+
 
 function App() {
   const [ productsFilter, setProductsFilter ] = useState("Produtos");
@@ -32,6 +38,8 @@ function App() {
               <Route path="/" element={ <HomeView /> } /> 
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<Cadastro />} />
+              <Route path="/employees" element={<Employees />} />
+              <Route path="/register-product" element={<RegisterProduct />} />
               <Route path="/cart" element={ <Cart/> } /> 
               <Route path="/checkout" element={ <Checkout/> } /> 
             </Routes>
