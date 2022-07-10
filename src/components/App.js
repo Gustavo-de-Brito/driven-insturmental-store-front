@@ -10,7 +10,6 @@ import Cadastro from "./Cadastro";
 
 import Employees from "./Employees";
 import RegisterProduct from "./RegisterProduct";
-import UserContext from "./UserContext";
 
 import Navbar from "./Navbar/Navbar";
 import Cart from "./Cart/Cart";
