@@ -3,37 +3,33 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import React from 'react'
 import { render } from 'react-dom'
 import { ThreeDots } from 'react-loader-spinner'
 
-import UserContext from "./UserContext";
-
-export default function Login () {
-	const [email, setEmail] = useState("");
-	const [senha, setSenha] = useState("");
+export default function RegisterProduct () {
+	const [url, setUrl] = useState("");
+	const [categoria, setCategoria] = useState("");
+    const [nome, setNome] = useState("");
+    const [preco, setPreco] = useState("");
     const [loading, setLoading] = useState(false);
-    const { userData, setUserData } = useContext(UserContext);
-    const { userName, setUserName } = useContext(UserContext);
     const navigate = useNavigate();
 
-	function fazerLogin (event) {
+	function fazerCadastro (event) {
 		event.preventDefault();
 
         setLoading(true);
 
-        const requisicao = axios.post("https://driven-instrumental.herokuapp.com/login", {
-            email: email,
-            password: senha
-        });
-
+            const requisicao = axios.post("https://driven-instrumental.herokuapp.com/products", {
+                name: nome,
+                imageUrl: url,
+                price: preco,
+                category: categoria
+            });
 
         requisicao.then((response) => {
-            setUserData(response.data.token);
-            setUserName(response.data.name);
             console.log(response.data);
-            navigate("/cart");
+            navigate("/register-product");
         });
 
         requisicao.catch((err) => {
@@ -44,25 +40,19 @@ export default function Login () {
 
     return (
         <>
-            <Logo>
-            <h1>DRIVEN <br></br> INSTRUMENTAL</h1>
-            </Logo>
-
+        <Logo>
+        <h1>DRIVEN <br></br> INSTRUMENTAL</h1>
+        </Logo>
+        
             <Form>
-                <form onSubmit={fazerLogin}>
-                    <input type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} required disabled={loading}/>
-                    <br/>
-                    <input type="password" placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} required disabled={loading}/>
-                    <br/>
-                    {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Entrar</button>}
+                <form onSubmit={fazerCadastro}>
+                    <input type="text" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required disabled={loading}/>
+                    <input type="url" placeholder="URL da imagem" value={url} onChange={e => setUrl(e.target.value)} required disabled={loading}/>
+                    <input type="text" placeholder="Categoria" value={categoria} onChange={e => setCategoria(e.target.value)} required disabled={loading}/>
+                    <input type="number" placeholder="Preco" value={preco} onChange={e => setPreco(e.target.value)} required disabled={loading}/>
+                    {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Cadastrar novo produto</button>}
                 </form>
             </Form>
-
-            <Cadastro>
-                <Link to="/cadastro">
-                    <h1>Não tem uma conta? Cadastre-se!</h1>
-                </Link>
-            </Cadastro>
         </>
     );
 }
@@ -76,7 +66,7 @@ const Logo = styled.div`
     margin-bottom: 30px;
 `;
 
-const Cadastro = styled.div`
+const RedirectLogin = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,11 +84,13 @@ const Cadastro = styled.div`
 `;
 
 const Form = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 100px;
+    }
 
     input {
         border-width: 1px;
@@ -134,7 +126,7 @@ const Form = styled.div`
     button {
         border-style: none;
         border-radius: 5px;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
         width: 80vw;
         height: 45px;
         background-color: #10454F;

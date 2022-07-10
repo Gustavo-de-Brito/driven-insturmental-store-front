@@ -6,6 +6,8 @@ import HomeView from "./Home/HomeView";
 import GlobalStyle from "./theme/globalStyle";
 import Login from "./Login";
 import Cadastro from "./Cadastro";
+import Employees from "./Employees";
+import RegisterProduct from "./RegisterProduct";
 import UserContext from "./UserContext";
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
           <Route path="/" element={ <HomeView /> } />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/register-product" element={<RegisterProduct />} />
         </Routes>
       </BrowserRouter>
       </UserContext.Provider>
