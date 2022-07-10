@@ -11,13 +11,14 @@ import Navbar from "./Navbar/Navbar";
 
 function App() {
   const [ productsFilter, setProductsFilter ] = useState("Produtos");
+  const [ currentPage, setCurrentPage ] = useState(1);
   const [ products, setProducts ] = useState([]);
   const [userData, setUserData] = useState(null);
   const [userName, setUserName] = useState("");
   const [ isUserLogged, setIsUserLogged ] = useState(true);
 
   return (
-    <FilterContext.Provider value={ { productsFilter, setProductsFilter } } >
+    <FilterContext.Provider value={ { productsFilter, setProductsFilter, currentPage, setCurrentPage } } >
       <ListProductsContext.Provider value={ { products, setProducts } } >
         <UserContext.Provider value={{userData, setUserData, userName, setUserName, isUserLogged, setIsUserLogged}}>
           <GlobalStyle />

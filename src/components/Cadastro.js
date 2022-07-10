@@ -20,7 +20,7 @@ export default function Cadastro () {
 
         setLoading(true);
 
-            const requisicao = axios.post("http://localhost:5000/signup", {
+            const requisicao = axios.post("https://driven-instrumental.herokuapp.com/signup", {
                 name: nome,
                 email: email,
                 password: senha,
