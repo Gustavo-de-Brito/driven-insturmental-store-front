@@ -10,57 +10,56 @@ import { ThreeDots } from 'react-loader-spinner'
 export default function Cadastro () {
 	const [email, setEmail] = useState("");
 	const [senha, setSenha] = useState("");
-    const [nome, setNome] = useState("");
-    const [confirmaSenha, setConfirmaSenha] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  const [nome, setNome] = useState("");
+  const [confirmaSenha, setConfirmaSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
 	function fazerCadastro (event) {
 		event.preventDefault();
 
-        setLoading(true);
-        
-            const requisicao = axios.post("https://driven-instrumental.herokuapp.com/signup", {
-                name: nome,
-                email: email,
-                password: senha,
-                confirm_password: confirmaSenha
-            });
+    setLoading(true);
+    const requisicao = axios.post("https://driven-instrumental.herokuapp.com/signup", {
+        name: nome,
+        email: email,
+        password: senha,
+        confirm_password: confirmaSenha
+    });
 
-        requisicao.then((response) => {
-            console.log(response.data);
-            navigate("/login");
-        });
+    requisicao.then((response) => {
+        console.log(response.data);
+        navigate("/login");
+    });
 
-        requisicao.catch((err) => {
-            console.log(err);
-            alert(err);
-        });
+    requisicao.catch((err) => {
+        console.log(err);
+        alert(err);
+    });
 	}
 
-    return (
-        <>
-        <Logo>
-        <h1>DRIVEN <br></br> INSTRUMENTAL</h1>
-        </Logo>
-        
-            <Form>
-                <form onSubmit={fazerCadastro}>
-                    <input type="text" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required disabled={loading}/>
-                    <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required disabled={loading}/>
-                    <input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required disabled={loading}/>
-                    <input type="password" placeholder="Confirme a senha" value={confirmaSenha} onChange={e => setConfirmaSenha(e.target.value)} required disabled={loading}/>
-                    {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Cadastrar</button>}
-                </form>
-            </Form>
+  return (
+      <>
+      <Logo>
+      <h1>DRIVEN <br></br> INSTRUMENTAL</h1>
+      </Logo>
 
-            <RedirectLogin>
-                <Link to="/">
-                    <h1>Já possui uma conta? Entre</h1>
-                </Link>
-            </RedirectLogin>
-        </>
-    );
+          <Form>
+              <form onSubmit={fazerCadastro}>
+                  <input type="text" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required disabled={loading}/>
+                  <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required disabled={loading}/>
+                  <input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required disabled={loading}/>
+                  <input type="password" placeholder="Confirme a senha" value={confirmaSenha} onChange={e => setConfirmaSenha(e.target.value)} required disabled={loading}/>
+                  {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Cadastrar</button>}
+              </form>
+          </Form>
+
+          <RedirectLogin>
+              <Link to="/">
+                  <h1>Já possui uma conta? Entre</h1>
+              </Link>
+          </RedirectLogin>
+      </>
+  );
 }
 
 const Logo = styled.div`

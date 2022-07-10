@@ -1,28 +1,34 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import FilterContext from "../Contexts/FilterContext";
 import styled from "styled-components";
+import FilterContext from "../Contexts/FilterContext";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-function SideMenu({ setShowFilterMenu }) {
+function SideMenu({ setShowFilterMenu, getProductsData, showFilterMenu }) {
   const iconStyle = { color: "#FFFFFF", fontSize: "40px", alignSelf: "flex-end", margin: "12px 4px" };
 
-  const { setProductsFilter } = useContext(FilterContext);
+  const { setProductsFilter, setCurrentPage } = useContext(FilterContext);
   const navigate = useNavigate();
-
+  
   function selectCategory(e) {
-    if(e.target.innerText === "Todos os produtos") {
-      setProductsFilter("Produtos");
-    } else {
-      setProductsFilter(e.target.innerText);
-    }
+    let filter;
 
+    if(e.target.innerText === "Todos os produtos") {
+      filter = "Produtos";
+    } else {
+      filter = e.target.innerText;
+    }
+    
+    console.log(`aqui ${ filter }`)
+    setProductsFilter(filter);
+    getProductsData(filter);
+    setCurrentPage(1);
     setShowFilterMenu(false);
     navigate("/");
   }
 
   return (
-    <DarkBackground>
+    <DarkBackground showFilterMenu={ showFilterMenu }>
       <FilterContainer>
         <IoCloseCircleOutline onClick={ () => setShowFilterMenu(false) } style={ iconStyle } />
         <CategoryOptions>

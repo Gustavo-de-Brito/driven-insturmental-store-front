@@ -1,13 +1,15 @@
 import { useContext } from "react";
-import ListProductsContext from "../Contexts/ListProductsContext";
 import styled from "styled-components";
+import ListProductsContext from "../Contexts/ListProductsContext";
+import FilterContext from "../Contexts/FilterContext";
 import { IoArrowBackCircleSharp, IoArrowForwardCircle } from "react-icons/io5";
 import DefaultButton from "../shared/DefaultButtonStyle";
 
-function Pagination({ currentPage, setCurrentPage }) {
+function Pagination() {
   const { products } = useContext(ListProductsContext);
+  const { currentPage, setCurrentPage } = useContext(FilterContext);
 
-  const qtdPages = Math.ceil(products.length / 10);
+  const qtdPages = products.length;
   
   const navigateButtonStyle = { color: "#10454F", fontSize: "40px"};
 
@@ -30,7 +32,13 @@ function Pagination({ currentPage, setCurrentPage }) {
               window.scroll({top: 0, behavior: "smooth"});
             }}
           />
-          <DefaultButton>{ currentPage }</DefaultButton>
+          {
+            qtdPages === 1
+            ?
+            <></>
+            :
+            <DefaultButton>{ currentPage }</DefaultButton>
+          }
           <IoArrowForwardCircle
             style={ 
               qtdPages === currentPage 

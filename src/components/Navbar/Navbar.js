@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import ListProductsContext from "../Contexts/ListProductsContext";
+import FilterContext from "../Contexts/FilterContext";
 import SideMenu from "./SideMenu";
 import { BsCart2 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -15,13 +18,60 @@ function Navbar() {
   const showNavbar = canShowNavbar();
   const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
+  const { setProducts } = useContext(ListProductsContext);
+  const { productsFilter } = useContext(FilterContext);
+
+  function filterProductsByPage(allProducts, filter) {
+    const filterByCategory = category => {
+      return category === filter || filter === "Produtos";
+    }
+
+    const QTD_PRODUCTS_FOR_PAGE = 10;
+    const categoryProducts = allProducts.filter(({ category }) => filterByCategory(category));
+    const qtdPages = Math.ceil(categoryProducts.length / 10);
+
+    const filteredProducts = [];
+
+    for(let i = 1; i <= qtdPages; i++) {
+      const productsInitialPosition = (i - 1) * QTD_PRODUCTS_FOR_PAGE;
+      const productsFinalPosition = i * QTD_PRODUCTS_FOR_PAGE;
+
+      if(productsFinalPosition > categoryProducts.length) {
+        filteredProducts.push(categoryProducts.slice(productsInitialPosition));
+      } else {
+        filteredProducts.push(categoryProducts.slice(productsInitialPosition, productsFinalPosition));
+      }
+    }
+
+    setProducts(filteredProducts);
+  }
+
+  async function getProductsData(filter) {
+    try{
+      const response = await axios.get("https://driven-instrumental.herokuapp.com/products");
+
+      filterProductsByPage(response.data, filter);
+    } catch(err) {
+      console.log(err.response.data);
+      alert("Ocorreu um erro ao tentar exibir os produtos");
+    }
+  }
+
+  useEffect(() => {
+    getProductsData(productsFilter);
+  }, []);
+
   return (
     <NavigationBar showNavbar={ showNavbar }>
       <GiHamburgerMenu onClick={ () => setShowFilterMenu(true) } style={{ color:"#FFFFFF", fontSize: "40px" }} />
       <h1>DRIVEN <span>Instrumental</span></h1>
       <BsCart2 style={{ color:"#FFFFFF", fontSize: "40px" }} />
       {
-        showFilterMenu ? <SideMenu setShowFilterMenu={ setShowFilterMenu } /> : <></>
+        showFilterMenu
+        ?
+        <SideMenu setShowFilterMenu={ setShowFilterMenu } getProductsData={ getProductsData } />
+        :
+        <></>
       }
     </NavigationBar>
   );
