@@ -7,59 +7,54 @@ import React from 'react'
 import { render } from 'react-dom'
 import { ThreeDots } from 'react-loader-spinner'
 
-export default function Cadastro () {
-	const [email, setEmail] = useState("");
-	const [senha, setSenha] = useState("");
-  const [nome, setNome] = useState("");
-  const [confirmaSenha, setConfirmaSenha] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+export default function RegisterProduct () {
+	const [url, setUrl] = useState("");
+	const [categoria, setCategoria] = useState("");
+    const [nome, setNome] = useState("");
+    const [preco, setPreco] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
 	function fazerCadastro (event) {
 		event.preventDefault();
 
-    setLoading(true);
-    const requisicao = axios.post("https://driven-instrumental.herokuapp.com/signup", {
-        name: nome,
-        email: email,
-        password: senha,
-        confirm_password: confirmaSenha
-    });
+        setLoading(true);
 
-    requisicao.then((response) => {
-        console.log(response.data);
-        navigate("/login");
-    });
+            const requisicao = axios.post("https://driven-instrumental.herokuapp.com/products", {
+                name: nome,
+                imageUrl: url,
+                price: preco,
+                category: categoria
+            });
 
-    requisicao.catch((err) => {
-        console.log(err);
-        alert(err);
-    });
+        requisicao.then((response) => {
+            console.log(response.data);
+            navigate("/register-product");
+        });
+
+        requisicao.catch((err) => {
+            console.log(err);
+            alert(err);
+        });
 	}
 
-  return (
-      <>
-      <Logo>
-      <h1>DRIVEN <br></br> INSTRUMENTAL</h1>
-      </Logo>
-
-          <Form>
-              <form onSubmit={fazerCadastro}>
-                  <input type="text" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required disabled={loading}/>
-                  <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required disabled={loading}/>
-                  <input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required disabled={loading}/>
-                  <input type="password" placeholder="Confirme a senha" value={confirmaSenha} onChange={e => setConfirmaSenha(e.target.value)} required disabled={loading}/>
-                  {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Cadastrar</button>}
-              </form>
-          </Form>
-
-          <RedirectLogin>
-              <Link to="/">
-                  <h1>Já possui uma conta? Entre</h1>
-              </Link>
-          </RedirectLogin>
-      </>
-  );
+    return (
+        <>
+        <Logo>
+        <h1>DRIVEN <br></br> INSTRUMENTAL</h1>
+        </Logo>
+        
+            <Form>
+                <form onSubmit={fazerCadastro}>
+                    <input type="text" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required disabled={loading}/>
+                    <input type="url" placeholder="URL da imagem" value={url} onChange={e => setUrl(e.target.value)} required disabled={loading}/>
+                    <input type="text" placeholder="Categoria" value={categoria} onChange={e => setCategoria(e.target.value)} required disabled={loading}/>
+                    <input type="number" placeholder="Preco" value={preco} onChange={e => setPreco(e.target.value)} required disabled={loading}/>
+                    {loading ? <button disabled><ThreeDots color="#fff" height={'1.8rem'} width={'100%'} /></button> : <button type="submit">Cadastrar novo produto</button>}
+                </form>
+            </Form>
+        </>
+    );
 }
 
 const Logo = styled.div`
