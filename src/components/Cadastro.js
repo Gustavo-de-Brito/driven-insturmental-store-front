@@ -19,7 +19,7 @@ export default function Cadastro () {
 		event.preventDefault();
 
         setLoading(true);
-
+        
             const requisicao = axios.post("https://driven-instrumental.herokuapp.com/signup", {
                 name: nome,
                 email: email,
@@ -29,7 +29,7 @@ export default function Cadastro () {
 
         requisicao.then((response) => {
             console.log(response.data);
-            navigate("/");
+            navigate("/login");
         });
 
         requisicao.catch((err) => {

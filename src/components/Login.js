@@ -33,7 +33,7 @@ export default function Login () {
             setUserData(response.data.token);
             setUserName(response.data.name);
             console.log(response.data);
-            navigate("/cart");
+            navigate("/");
         });
 
         requisicao.catch((err) => {
