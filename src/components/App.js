@@ -19,16 +19,18 @@ import CartContext from "./Contexts/CartContext"
 
 function App() {
   const [ productsFilter, setProductsFilter ] = useState("Produtos");
+  const [ currentPage, setCurrentPage ] = useState(1);
   const [ products, setProducts ] = useState([]);
   const [userData, setUserData] = useState(null);
   const [userName, setUserName] = useState("");
+  const [ isUserLogged, setIsUserLogged ] = useState(true)
   const [total, setTotal] = useState(0);
   const [productsSelected, setProductsSelected] = useState([]);
 
   return (
-    <FilterContext.Provider value={ { productsFilter, setProductsFilter } } >
+    <FilterContext.Provider value={ { productsFilter, setProductsFilter, currentPage, setCurrentPage } } >
       <ListProductsContext.Provider value={ { products, setProducts } } >
-        <UserContext.Provider value={{userData, setUserData, userName, setUserName}}>
+        <UserContext.Provider value={{userData, setUserData, userName, setUserName, isUserLogged, setIsUserLogged}}>
         <CartContext.Provider value={ {productsSelected, setProductsSelected, total, setTotal} } >
           <GlobalStyle />
           <BrowserRouter>
