@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import UserContext from "../UserContext";
+import UserContext from "../Contexts/UserContext";
 import LoginWarning from "../shared/LoginWarning";
 import DefaultButton from "../shared/DefaultButtonStyle";
 
