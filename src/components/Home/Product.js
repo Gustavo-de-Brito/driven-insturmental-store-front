@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import UserContext from "../UserContext";
+import UserContext from "../Contexts/UserContext";
 import LoginWarning from "../shared/LoginWarning";
 import DefaultButton from "../shared/DefaultButtonStyle";
 
@@ -20,7 +20,7 @@ function Product({ product }) {
     };
 
     try {
-      await axios.post("https://driven-instrumental.herokuapp.com/carts", body, config);
+      await axios.post("http://localhost:5000/carts", body, config);
 
       alert("Produto adicionado ao carrinho com sucesso");
     } catch(err) {

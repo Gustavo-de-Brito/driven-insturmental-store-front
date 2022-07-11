@@ -8,7 +8,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { ThreeDots } from 'react-loader-spinner'
 
-import UserContext from "./UserContext";
+import UserContext from "./Contexts/UserContext";
 
 export default function Login () {
 	const [email, setEmail] = useState("");
@@ -23,7 +23,7 @@ export default function Login () {
 
         setLoading(true);
 
-        const requisicao = axios.post("https://driven-instrumental.herokuapp.com/login", {
+        const requisicao = axios.post("http://localhost:5000/login", {
             email: email,
             password: senha
         });

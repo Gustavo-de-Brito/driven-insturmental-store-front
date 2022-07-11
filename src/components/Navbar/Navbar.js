@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import ListProductsContext from "../Contexts/ListProductsContext";
 import FilterContext from "../Contexts/FilterContext";
@@ -12,6 +12,7 @@ function Navbar() {
   const canShowNavbar= () => {
     return currentRoute === "/" || currentRoute === "/cart" || currentRoute === "/checkout";
   }
+  const navigate = useNavigate();
 
   const location = useLocation();
   const currentRoute = location.pathname;
@@ -48,7 +49,7 @@ function Navbar() {
 
   async function getProductsData(filter) {
     try{
-      const response = await axios.get("https://driven-instrumental.herokuapp.com/products");
+      const response = await axios.get("http://localhost:5000/products");
 
       filterProductsByPage(response.data, filter);
     } catch(err) {
@@ -65,7 +66,7 @@ function Navbar() {
     <NavigationBar showNavbar={ showNavbar }>
       <GiHamburgerMenu onClick={ () => setShowFilterMenu(true) } style={{ color:"#FFFFFF", fontSize: "40px" }} />
       <h1>DRIVEN <span>Instrumental</span></h1>
-      <BsCart2 style={{ color:"#FFFFFF", fontSize: "40px" }} />
+      <BsCart2 onClick={() => navigate("/cart")} style={{ color:"#FFFFFF", fontSize: "40px" }} />
       {
         showFilterMenu
         ?
