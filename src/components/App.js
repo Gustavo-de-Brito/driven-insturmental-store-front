@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import FilterContext from "./Contexts/FilterContext";
 import ListProductsContext from "./Contexts/ListProductsContext";
-import UserContext from "./UserContext";
+import UserContext from "./Contexts/UserContext";
 import GlobalStyle from "./theme/globalStyle";
 import HomeView from "./Home/HomeView";
 import Login from "./Login";

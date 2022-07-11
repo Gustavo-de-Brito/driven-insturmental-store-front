@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../UserContext";
+import UserContext from "../Contexts/UserContext";
 import DefaultButton from "./DefaultButtonStyle";
 
 function LoginWarning() {
