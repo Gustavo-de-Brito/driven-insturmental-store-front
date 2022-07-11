@@ -8,34 +8,56 @@ import { render } from 'react-dom'
 import { ThreeDots } from 'react-loader-spinner'
 
 export default function RegisterProduct () {
-	const [url, setUrl] = useState("");
-	const [categoria, setCategoria] = useState("");
+    const [url, setUrl] = useState("");
+  	const [categoria, setCategoria] = useState("");
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-	function fazerCadastro (event) {
-		event.preventDefault();
+    function fazerCadastro () {
+      setLoading(true);
 
-        setLoading(true);
+      const requisicao = axios.post("https://driven-instrumental.herokuapp.com/products", {
+          name: nome,
+          imageUrl: url,
+          price: preco,
+          category: categoria
+      });
 
-            const requisicao = axios.post("https://driven-instrumental.herokuapp.com/products", {
-                name: nome,
-                imageUrl: url,
-                price: preco,
-                category: categoria
-            });
-
-        requisicao.then((response) => {
-            navigate("/register-product");
+      requisicao.then((response) => {
+          navigate("/register-product");
+          setLoading(false);
+          cleanInputs();
         });
-
+        
         requisicao.catch((err) => {
-            console.log(err);
-            alert(err);
-        });
-	}
+          console.log(err);
+          setLoading(false);
+          cleanInputs();
+      });
+    }
+
+    function validateImage(e) {
+      e.preventDefault();
+      const image = new Image();
+
+      if(!url.includes("https")) {
+        return alert("A URL da imagem não está no formato HTTPS");
+      }
+
+      image.src = url;
+      image.onerror = () => alert("A URL da imagem é inválida");
+
+      image.onload = fazerCadastro;
+    }
+
+    function cleanInputs() {
+      setUrl("");
+      setCategoria("");
+      setNome("");
+      setPreco("");
+    }
 
     return (
         <>
@@ -44,7 +66,7 @@ export default function RegisterProduct () {
         </Logo>
         
             <Form>
-                <form onSubmit={fazerCadastro}>
+                <form onSubmit={ validateImage }>
                     <input type="text" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required disabled={loading}/>
                     <input type="url" placeholder="URL da imagem" value={url} onChange={e => setUrl(e.target.value)} required disabled={loading}/>
                     <input type="text" placeholder="Categoria" value={categoria} onChange={e => setCategoria(e.target.value)} required disabled={loading}/>

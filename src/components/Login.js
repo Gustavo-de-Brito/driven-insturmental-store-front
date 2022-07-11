@@ -37,7 +37,7 @@ export default function Login () {
 
         requisicao.catch((err) => {
             console.log(err);
-            alert(err);
+            setLoading(false);
         });
 	}
 
