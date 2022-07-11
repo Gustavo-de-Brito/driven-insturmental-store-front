@@ -28,7 +28,6 @@ export default function RegisterProduct () {
             });
 
         requisicao.then((response) => {
-            console.log(response.data);
             navigate("/register-product");
         });
 

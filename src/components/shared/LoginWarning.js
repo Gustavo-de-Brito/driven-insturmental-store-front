@@ -36,6 +36,7 @@ const Background = styled.div`
   height: 100vh;
   padding: 20px;
   background-color: rgba(202, 202, 202, 0.22);
+  color: #000000;
   text-align: center;
   position: fixed;
   top: 0;

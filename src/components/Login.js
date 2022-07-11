@@ -32,7 +32,6 @@ export default function Login () {
         requisicao.then((response) => {
             setUserData(response.data.token);
             setUserName(response.data.name);
-            console.log(response.data);
             navigate("/");
         });
 
