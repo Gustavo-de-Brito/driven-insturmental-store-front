@@ -72,8 +72,6 @@ export default function Cart(){
         const addSelectedProduct = listProducts[index];
         const productExistsInCart = productsSelected.some(product => product._id === addSelectedProduct._id);
 
-        console.log(productExistsInCart);
-
         if (!productExistsInCart) {
             setProductsSelected([...productsSelected, addSelectedProduct]);
             setTotal(total + Number(addSelectedProduct.price.replace(",", ".")));

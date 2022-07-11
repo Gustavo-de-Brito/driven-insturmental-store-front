@@ -18,8 +18,7 @@ function SideMenu({ setShowFilterMenu, getProductsData, showFilterMenu }) {
     } else {
       filter = e.target.innerText;
     }
-    
-    console.log(`aqui ${ filter }`)
+
     setProductsFilter(filter);
     getProductsData(filter);
     setCurrentPage(1);

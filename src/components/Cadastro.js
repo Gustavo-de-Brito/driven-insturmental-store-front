@@ -27,7 +27,6 @@ export default function Cadastro () {
     });
 
     requisicao.then((response) => {
-        console.log(response.data);
         navigate("/login");
     });
 

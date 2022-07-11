@@ -1,7 +1,10 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 import CartContext from "../Contexts/CartContext";
-
+import UserContext from "../Contexts/UserContext";
+import LoginWarning from "../shared/LoginWarning";
 
 export default function Checkout(){
 
@@ -11,31 +14,89 @@ export default function Checkout(){
     const [codCCV, setCodCCV] = useState("");
 
     const { productsSelected, total } = useContext(CartContext);
+    const { userData, isUserLogged, setIsUserLogged } = useContext(UserContext);
 
+    const navigate = useNavigate();
+
+    function formatNumberCard(e) {
+      const input = Number(e.target.value);
+
+      if(isNaN(input)) {
+        return;
+      } else {
+        setNumberCard(input);
+      }
+    }
+
+    function formatCodCCV(e) {
+      const input = Number(e.target.value);
+
+      if(isNaN(input)) {
+        return;
+      } else {
+        setCodCCV(input);
+      }
+    }
+
+    async function sendPurchaseData(e) {
+      e.preventDefault();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ userData }`
+        }
+      }
+
+      const body = {
+        totalPrice: total,
+        products: productsSelected,
+        paymentMethod: "cartão de crédito"
+      }
+
+      try {
+        await axios.post("https://driven-instrumental.herokuapp.com/purchases", body, config);
+
+        alert("Compra realizada com sucesso");
+        navigate("/");
+      } catch(err) {
+        if(err.response.status === 401) {
+          setIsUserLogged(false);
+        } else {
+          alert("Ocorreu um erro ao tentar finalizar o pedido");
+        }
+      }
+    }
 
     return(
         <CheckoutScreen>
-            <form action="/confirm">
-            <h1>Insira seus dados</h1>
-            <select name="Pagamento" disabled>
-                <option value="1">Cartão de crédito</option>
-            </select>
-            <input type="text"
-            inputMode="text" maxLength="20" value={nameCard} onChange={e => setNameCard(e.target.value.replace(/[^a-zA-Z'-'\s]*/gi, ''))} placeholder="Nome no cartão de crédito" />
-            <input type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" maxLength="19" value={numberCard}  onChange={e => setNumberCard(e.target.value)} placeholder="Número do cartão de crédito" />
-            <span><label htmlFor="bdaymonth">Vencimento:</label>
-            <input type="month" inputMode="numeric" maxLength="5" value={dateCard} onChange={e => setDateCard(e.target.value)} placeholder="Data de validade (MM/AA)" />
-            </span>
-            <input type="tel" inputMode="numeric" pattern="[0-9\s]{3,3}" maxLength="3" value={codCCV}  onChange={e => setCodCCV(e.target.value)} placeholder="Código de segurança (CVV)" />
+            <form onSubmit={ sendPurchaseData }>
+              <h1>Insira seus dados</h1>
+              <select name="Pagamento" disabled>
+                  <option value="1">Cartão de crédito</option>
+              </select>
+              <input type="text"
+              inputMode="text" maxLength="20" value={nameCard} onChange={e => setNameCard(e.target.value.replace(/[^a-zA-Z'-'\s]*/gi, ''))} placeholder="Nome no cartão de crédito" />
+              <input type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" maxLength="19" value={numberCard}  onChange={ formatNumberCard } placeholder="Número do cartão de crédito" />
+              <span><label htmlFor="bdaymonth">Vencimento:</label>
+              <input type="month" inputMode="numeric" maxLength="5" value={dateCard} onChange={e => setDateCard(e.target.value)} placeholder="Data de validade (MM/AA)" />
+              </span>
+              <input type="tel" inputMode="numeric" pattern="[0-9\s]{3,3}" maxLength="3" value={codCCV}  onChange={ formatCodCCV } placeholder="Código de segurança (CVV)" />
 
-            <Footer>
-                <TotalPrice>
-                    <h3>Total</h3>
-                    <h2>R$ {total.toFixed(2)}</h2>
-                </TotalPrice>
-                <StartOrderButton type="submit"><h4>Finalizar pedido</h4></StartOrderButton>
-            </Footer>
+              <Footer>
+                  <TotalPrice>
+                      <h3>Total</h3>
+                      <h2>R$ {total.toFixed(2)}</h2>
+                  </TotalPrice>
+                  <StartOrderButton type="submit"><h4>Finalizar pedido</h4></StartOrderButton>
+              </Footer>
             </form>
+            {
+              !isUserLogged
+              ?
+              <LoginWarning />
+              :
+              <></>
+            }
         </CheckoutScreen>
     );
 }
@@ -82,6 +143,13 @@ const CheckoutScreen = styled.div`
         margin-bottom: 1%;
     }
 
+    select:disabled {
+      background-color: #FFFFFF;
+      font-size: 20px;
+      color: #000000;
+      opacity: 1;
+    }
+
     h1{
         font-family: 'Roboto';
         font-size: 28px;
@@ -108,7 +176,7 @@ const CheckoutScreen = styled.div`
         border: 1px solid #10454F;
         border-radius: 5px;
     }
-`
+`;
 
 
 const Footer = styled.div`
@@ -124,7 +192,7 @@ const Footer = styled.div`
     align-items: center;
     justify-content: space-between;
     
-`
+`;
 
 const TotalPrice = styled.div`
     width: 95%;
@@ -149,7 +217,7 @@ const TotalPrice = styled.div`
         font-weight: 700;
         color: black;  
     }
-`
+`;
 
 const StartOrderButton = styled.button`
     width: 95%;
@@ -167,4 +235,4 @@ const StartOrderButton = styled.button`
         color: white;
     }
 
-`
+`;
