@@ -20,7 +20,7 @@ function Product({ product }) {
     };
 
     try {
-      await axios.post("http://localhost:5000/carts", body, config);
+      await axios.post("https://driven-instrumental.herokuapp.com/carts", body, config);
 
       alert("Produto adicionado ao carrinho com sucesso");
     } catch(err) {

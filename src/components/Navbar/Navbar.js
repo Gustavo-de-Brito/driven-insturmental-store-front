@@ -49,7 +49,7 @@ function Navbar() {
 
   async function getProductsData(filter) {
     try{
-      const response = await axios.get("http://localhost:5000/products");
+      const response = await axios.get("https://driven-instrumental.herokuapp.com/products");
 
       filterProductsByPage(response.data, filter);
     } catch(err) {

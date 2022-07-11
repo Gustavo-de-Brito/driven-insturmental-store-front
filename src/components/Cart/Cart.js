@@ -36,7 +36,7 @@ export default function Cart(){
         //const cart = await axios.get(`https://driven-instrumental.herokuapp.com/carts`, config);
 
         try{
-            const cart = await axios.get(`http://localhost:5000/carts`, config);
+            const cart = await axios.get(`https://driven-instrumental.herokuapp.com/carts`, config);
 
             if(!cart){
                 console.log("Problema ao obter cart");
@@ -46,7 +46,7 @@ export default function Cart(){
             // console.log("resposta carts: " );
             // console.log(cart.data.products);
     
-            const cartProducts = await axios.post(`http://localhost:5000/cartProducts`, {cartProducts: cart.data.products}, config);
+            const cartProducts = await axios.post(`https://driven-instrumental.herokuapp.com/cartProducts`, {cartProducts: cart.data.products}, config);
             //cart.data.products
             if (!cartProducts) {
                 console.log("Problema ao obter produtos do carrinho");

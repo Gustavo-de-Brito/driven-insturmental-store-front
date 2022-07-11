@@ -20,7 +20,7 @@ export default function RegisterProduct () {
 
         setLoading(true);
 
-            const requisicao = axios.post("http://localhost:5000/products", {
+            const requisicao = axios.post("https://driven-instrumental.herokuapp.com/products", {
                 name: nome,
                 imageUrl: url,
                 price: preco,
