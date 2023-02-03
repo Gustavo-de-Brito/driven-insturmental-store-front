@@ -22,7 +22,7 @@ function HomeView() {
 
 const BrandLogo = styled.div`
     width: 100vw;
-    height: 36vh;
+    height: 25vh;
     margin-top: 10px;
     border: 1px solid #000;
     background-position: center;
